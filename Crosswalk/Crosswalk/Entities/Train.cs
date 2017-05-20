@@ -48,8 +48,7 @@ namespace Crosswalk.Entities
         }
         
         /// <summary>
-        /// Fügt einen Zug zur Szene hinzu, der aus der angegebenen Richtung über die
-        /// Kreuzung fährt.
+        /// Adds a train to the scene that follows a given path.
         /// </summary>
         /// <param name="scene"></param>
         /// <param name="direction"></param>

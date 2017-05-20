@@ -68,11 +68,11 @@ namespace Crosswalk.Entities
                 , dx + 1, dy + 1 + (cHeight * 2), cWidth, cHeight);
 #if TEST
             g.FillEllipse(
-                (Status == AmpelStatus.Red ? Brushes.Red : Brushes.Blue)
+                (Status == TrafficLightState.Red ? Brushes.Red : Brushes.Blue)
                 , Position.X - 2, Position.Y - 2, 4, 4);
 #endif
         }
-        
+
         public enum TrafficLightState
         {
             Green = 0,
