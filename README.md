@@ -6,7 +6,7 @@ Please note that the quality of code is going to be significantly lower than my 
 ## Table of Contents  
 [MultiSteam](#multisteam)  
 [OverwatchFinder](#overwatchfinder)  
-[QuickViewCSharp](#QuickViewCSharp)  
+[QuickViewCSharp](#quickviewcsharp)  
 [Crosswalk](#crosswalk)  
 
 <br>
