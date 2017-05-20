@@ -10,8 +10,8 @@ namespace Crosswalk.Management
 {
     class MainScene : Scene
     {
-        private float AutoCooldown = 100;
-        private float MenschCooldown = 100;
+        private float CarCooldown = 100;
+        private float HumanCooldown = 100;
 
         public override void Initialize()
         {
@@ -32,18 +32,18 @@ namespace Crosswalk.Management
             base.Update(deltaTime);
 
             //Add humans and cars in random intervals.
-            MenschCooldown -= deltaTime;
-            if (MenschCooldown <= 0)
+            HumanCooldown -= deltaTime;
+            if (HumanCooldown <= 0)
             {
                 Human.Add(this);
-                MenschCooldown = Util.RandFloat(800, 1500);
+                HumanCooldown = Util.RandFloat(800, 1500);
             }
 
-            AutoCooldown -= deltaTime;
-            if (AutoCooldown <= 0)
+            CarCooldown -= deltaTime;
+            if (CarCooldown <= 0)
             {
                 Car.Add(this);
-                AutoCooldown = Util.RandFloat(1600, 2000);
+                CarCooldown = Util.RandFloat(1600, 2000);
             }
         }
 

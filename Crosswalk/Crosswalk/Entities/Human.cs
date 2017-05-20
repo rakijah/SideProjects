@@ -74,7 +74,7 @@ namespace Crosswalk.Entities
 
             //Die on collision with a car.
             var cars = Scene.CollisionManager.Collide(Collider, CollisionTag.Vehicle);
-            foreach(var auto in cars)
+            foreach(var car in cars)
             {
                 Die();
                 return;
