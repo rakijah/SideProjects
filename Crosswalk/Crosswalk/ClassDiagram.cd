@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Ampelkreuzung.Components.AmpelDetector" Collapsed="true">
+    <Position X="3.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAAAAAAAAAAAgAAQgAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\AmpelDetector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Components.CircleCollider" Collapsed="true">
+    <Position X="7.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAAAAAAAgAQBgAAEABAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Components\CircleCollider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Components.Component" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAAAAAAwAAgAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\Component.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Components.Graphic" Collapsed="true">
+    <Position X="10" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAgAAAAIAAEAQAAAAABEAAAAAAAgAAAQ=</HashCode>
+      <FileName>Components\Graphic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Components.Path" Collapsed="true">
+    <Position X="5.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAgAIBAAIAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Components\Path.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Assets" Collapsed="true">
+    <Position X="18.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAkAAAAAAAAAAEAAAAAAAAAIAAAAAAAAAAAAUAAgA=</HashCode>
+      <FileName>Content\Assets.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Kreuzung" Collapsed="true">
+    <Position X="14.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAogAQAADEACggAgQCICQACAAAAAQAgQAAFBAAAQAA=</HashCode>
+      <FileName>Kreuzung.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Buffer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAACAAAAAAAAIACCAAAAAAEAAAAAAGAACAAAA=</HashCode>
+      <FileName>Utilities\Buffer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Ampelkreuzung.SafeList&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEYAAEAAAAAACBAQCAAABAQAAAIAAACECAAAAIBQIAA=</HashCode>
+      <FileName>Utilities\SafeList.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Ampelkreuzung.Util" Collapsed="true">
+    <Position X="20" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAICAAAAABAAAJAhAAAgAAAAmAACBQAgEAAAAAgIAA=</HashCode>
+      <FileName>Utilities\Util.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Vector2" Collapsed="true">
+    <Position X="20" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAEAAEcAEgAABAAQCAAABBAEAAAAAAYAA=</HashCode>
+      <FileName>Utilities\Vector2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Entities.Ampel" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Ampelkreuzung.Entities.Ampel.AmpelStatus" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Entities\Ampel.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAggAAAAAAAAAAAQAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Entities\Ampel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Entities.Auto" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAABAAAAAAAAAAAAAAAgBAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Auto.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Entities.Entity" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAABAAAAIA4AggAAABEAgAAAAAAAEABAAAAAEAAA=</HashCode>
+      <FileName>Entities\Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Entities.Mensch" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgYAAABCAAAAAAAgAAAAAAABAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Mensch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Entities.Particle" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASQAABAQIAAAAAAAIIAAEABAAAAABAAAAAAAAAAQQA=</HashCode>
+      <FileName>Entities\Particle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Entities.Zug" Collapsed="true">
+    <Position X="10" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAABAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Zug.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Management.CollisionManager" Collapsed="true">
+    <Position X="18.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAcAAAAAAAAAAAAAAAAABAQAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Management\CollisionManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Management.InputManager" Collapsed="true">
+    <Position X="18.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAABAAAAAAEAAABAIAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Management\InputManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Management.MainScene" Collapsed="true">
+    <Position X="3" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIgAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Management\MainScene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ampelkreuzung.Management.Scene" Collapsed="true">
+    <Position X="3" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAwAAEBAABCARAAAAAAAAAAEAIACAAAA=</HashCode>
+      <FileName>Management\Scene.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Ampelkreuzung.Components.CollisionTag" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Components\CircleCollider.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
