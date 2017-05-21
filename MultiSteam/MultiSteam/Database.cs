@@ -11,7 +11,7 @@ namespace MultiSteam2
         public static readonly string USER_TABLE = "users";
         public static readonly string CONFIG_TABLE = "config";
         static readonly string FILENAME = "users.sqlite";
-        static readonly string PASSWORD = "ab09a5a0d4f65a3535bd4bc3125a9dc2f82fdbdc";
+        static readonly string PASSWORD = "CHANGETHISBEFORECOMPILING";
 
         static SQLiteConnection Connection;
         public static bool Connected { get; private set; }
