@@ -59,10 +59,7 @@ namespace Crosswalk.Components
 #endif
         
     }
-
-    /// <summary>
-    /// Kollisionstags zur verwaltung von verschiedenen Kollisionskategorien.
-    /// </summary>
+    
     public enum CollisionTag
     {
         Vehicle,
