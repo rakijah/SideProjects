@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MultiSteam2
+namespace MultiSteam
 {
     public static class SteamManager
     {

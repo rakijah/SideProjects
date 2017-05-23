@@ -4,7 +4,7 @@ using System.Data.SQLite;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-namespace MultiSteam2
+namespace MultiSteam
 {
     public static class Database
     {
@@ -22,10 +22,6 @@ namespace MultiSteam2
         public static void Init()
         {
             Application.ApplicationExit += (s, e) => Disconnect();
-
-            //////////////////////////
-            //if (File.Exists(FILENAME)) File.Delete(FILENAME);
-            //////////////////////////
             
             if (!File.Exists(FILENAME)) //on first launch, create file, tables and encrypt database
             {

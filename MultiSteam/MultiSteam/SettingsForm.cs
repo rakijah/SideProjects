@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MultiSteam2
+namespace MultiSteam
 {
     public partial class SettingsForm : Form
     {
@@ -33,7 +33,7 @@ namespace MultiSteam2
 
         private void btnAddUser_Click(object sender, EventArgs e)
         {
-            SteamUser.CreateNew("user", "", "nick");
+            SteamUser.CreateNew("Username", "", "Nick");
             RefreshList();
             lbUsers.SelectedIndex = lbUsers.Items.Count - 1;
         }

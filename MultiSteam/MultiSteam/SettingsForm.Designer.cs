@@ -1,4 +1,4 @@
-﻿namespace MultiSteam2
+﻿namespace MultiSteam
 {
     partial class SettingsForm
     {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MultiSteam2.Properties
+namespace MultiSteam.Properties
 {
 
 
