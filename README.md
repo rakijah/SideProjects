@@ -8,6 +8,7 @@ Please note that the quality of code is going to be significantly lower than my 
 [OverwatchFinder](#overwatchfinder)  
 [QuickViewCSharp](#quickviewcsharp)  
 [Crosswalk](#crosswalk)  
+[CSGOSquadButton](#csgosquadbutton)  
 
 <br>
 
@@ -56,3 +57,11 @@ This project was created as a joke after our software development teacher gave u
 After I finished the basic requirements I began expanding this to be a small game engine, which is why I decided to upload it in the first place.
 Since no external libraries were permitted, System.Drawing/GDI+ was my choice for the graphics.
 Define the debug flag "INFO" for debug information (FPS, amount of entities etc.) or "TEST" to enable drawing colliders and paths to the screen.
+
+## [CSGOSquadButton](https://github.com/rakijah/SideProjects/tree/master/CSGOSquadButton)
+
+![Screenshot](http://i.imgur.com/MlOSjS9.png)
+
+(project created ca. 2016)
+
+A small Tampermonkey script that adds a CS:GO Squad button to every Steam profile to quickly search for the player on csgosquad.com.
