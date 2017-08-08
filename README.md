@@ -65,3 +65,11 @@ Define the debug flag "INFO" for debug information (FPS, amount of entities etc.
 (project created ca. 2016)
 
 A small Tampermonkey script that adds a CS:GO Squad button to every Steam profile to quickly search for the player on csgosquad.com.
+
+## [StreamCommit](https://github.com/rakijah/SideProjects/tree/master/StreamCommit)
+
+![Screenshot](http://i.imgur.com/xK2K0iV.png)
+
+An experimental utility that is supposed to help programming streamers better interact with their viewers. It periodically pushes git commits (currently every 10 seconds) of every file that has changed within a Git repository, so viewers can see the changes they make to their code live on Github.
+
+In my experience, it can sometimes be hard to track exactly what a streamer is doing, because they switch between files/scroll through documents too fast for their viewers. With this utility, a viewer can better understand the streamers code architecture and provide better help.
