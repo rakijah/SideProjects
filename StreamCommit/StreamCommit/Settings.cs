@@ -1,13 +1,12 @@
-using PropertyChanged;
 using System;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace StreamCommit
 {
-    [AddINotifyPropertyChangedInterface]
     public class Settings : INotifyPropertyChanged
     {
         public static Settings Instance { get; private set; }
@@ -18,6 +17,11 @@ namespace StreamCommit
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private void NotifyPropertyChanged([CallerMemberName] string name = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         public string FolderToWatch
         {
             get
@@ -26,7 +30,11 @@ namespace StreamCommit
             }
             set
             {
+                if (GetSetting(nameof(FolderToWatch)) == value)
+                    return;
+
                 SetSetting(nameof(FolderToWatch), value);
+                NotifyPropertyChanged();
             }
         }
 
@@ -46,7 +54,11 @@ namespace StreamCommit
             }
             set
             {
+                if (GetSetting(nameof(GitUsername)) == value)
+                    return;
+
                 SetSetting(nameof(GitUsername), value);
+                NotifyPropertyChanged();
             }
         }
 
@@ -58,7 +70,11 @@ namespace StreamCommit
             }
             set
             {
+                if (GetSetting(nameof(GitPassword)) == value)
+                    return;
+
                 SetSetting(nameof(GitPassword), value);
+                NotifyPropertyChanged();
             }
         }
 
@@ -70,7 +86,11 @@ namespace StreamCommit
             }
             set
             {
+                if (GetSetting(nameof(GitEmail)) == value)
+                    return;
+
                 SetSetting(nameof(GitEmail), value);
+                NotifyPropertyChanged();
             }
         }
 
@@ -82,7 +102,10 @@ namespace StreamCommit
             }
             set
             {
+                if (GetInt(nameof(CommitInterval), 10) == value)
+                    return;
                 SetSetting(nameof(CommitInterval), value.ToString());
+                NotifyPropertyChanged();
             }
         }
 

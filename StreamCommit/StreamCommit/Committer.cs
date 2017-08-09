@@ -71,8 +71,6 @@ namespace StreamCommit
 
         private Settings _settings;
 
-        public bool IsInitialized => Path != null && CommitInterval != default(int);
-
         public Committer(string path, int commitInterval)
         {
             _settings = Settings.Instance;
@@ -108,7 +106,7 @@ namespace StreamCommit
 
         public void StartMonitoring()
         {
-            if (Running || !IsInitialized)
+            if (Running)
                 return;
 
             _timer.Start();

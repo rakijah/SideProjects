@@ -13,12 +13,10 @@ namespace StreamCommit
         public Settings Settings;
         private Committer _committer;
         private bool IsReadyToRun => !string.IsNullOrWhiteSpace(Settings.FolderToWatch) && Settings.HasCredentials;
-        private Color _defaultMetroColor;
 
         public StreamCommitForm()
         {
             InitializeComponent();
-            _defaultMetroColor = tbFolderToWatch.BackColor;
             Settings = new Settings();
             Settings.PropertyChanged += SettingsChanged;
             UpdateFolderToWatch();
@@ -27,9 +25,6 @@ namespace StreamCommit
                 if (_committer != null)
                     _committer.Dispose();
             };
-
-            _committer = new Committer();
-            _committer.StatusChanged += StatusChanged;
         }
 
         private void UpdateFolderToWatch()
@@ -72,9 +67,7 @@ namespace StreamCommit
                 _committer.Path = Settings.FolderToWatch;
                 _committer.CommitInterval = Settings.CommitInterval;
             }
-
-            var btn = (MetroButton)sender;
-
+            
             if (_committer.Running)
             {
                 btnCredentials.Enabled = false;
@@ -87,7 +80,8 @@ namespace StreamCommit
                 btnFolderToWatch.Enabled = true;
                 _committer.StartMonitoring();
             }
-            btn.Text = (_committer.Running ? "Stop" : "Start");
+
+            btnToggleRun.Text = (_committer.Running ? "Stop" : "Start");
         }
 
         private void PickFolderToWatch(object sender, EventArgs e)
@@ -111,6 +105,7 @@ namespace StreamCommit
 
         private void SettingsChanged(object sender, PropertyChangedEventArgs e)
         {
+            Console.WriteLine(e.PropertyName);
             if (_committer != null && _committer.Running)
                 return;
 
@@ -122,20 +117,19 @@ namespace StreamCommit
             int tmp;
             if (int.TryParse(tbCommitInterval.Text, out tmp))
             {
-                tbCommitInterval.BackColor = _defaultMetroColor;
                 Settings.CommitInterval = tmp * 1000; //convert to ms
-            }
-            else
-            {
-                tbCommitInterval.BackColor = Color.Red;
             }
         }
 
         private void StreamCommitForm_Load(object sender, EventArgs e)
         {
-            tbFolderToWatch.Text = Settings.FolderToWatch ?? "";
-            tbCommitInterval.Text = (Settings.CommitInterval / 1000).ToString() ?? "10";
-
+            tbFolderToWatch.Text = Settings.FolderToWatch;
+            tbCommitInterval.Text = (Settings.CommitInterval / 1000).ToString();
+            _committer = new Committer();
+            _committer.Path = Settings.FolderToWatch;
+            _committer.CommitInterval = Settings.CommitInterval;
+            _committer.StatusChanged += StatusChanged;
+            
             btnToggleRun.Enabled = IsReadyToRun;
         }
     }
