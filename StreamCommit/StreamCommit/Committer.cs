@@ -1,12 +1,6 @@
 using LibGit2Sharp;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace StreamCommit
 {
@@ -16,9 +10,30 @@ namespace StreamCommit
     {
         public event StatusChangedHandler StatusChanged;
 
-        public string Path { get; private set; }
+        private string _path;
+
+        public string Path
+        {
+            get
+            {
+                return _path;
+            }
+            set
+            {
+                if (_path == value)
+                    return;
+
+                if (!Repository.IsValid(value))
+                    throw new Exception($"Path does not lead to a valid Git repository: \"{value}\".");
+
+                _repo = new Repository(value);
+                _path = value;
+            }
+        }
+
         public bool Running { get; private set; }
         private string _status = "Not running";
+
         public string Status
         {
             get
@@ -33,48 +48,84 @@ namespace StreamCommit
                 StatusChanged?.Invoke(_status);
             }
         }
-        private FileSystemWatcher _fsw;
+
         private int _commitInterval;
+
+        public int CommitInterval
+        {
+            get
+            {
+                return _commitInterval;
+            }
+            set
+            {
+                if (_commitInterval == value)
+                    return;
+                _commitInterval = value;
+                _timer.Interval = _commitInterval;
+            }
+        }
+
         private System.Windows.Forms.Timer _timer;
         private Repository _repo;
 
-        private List<string> _changedFiles = new List<string>();
+        private Settings _settings;
+
+        public bool IsInitialized => Path != null && CommitInterval != default(int);
 
         public Committer(string path, int commitInterval)
         {
-            if (!Repository.IsValid(path))
-                throw new Exception($"Path does not lead to a valid Git repository: \"{path}\".");
-
+            _settings = Settings.Instance;
             Path = path;
-            _repo = new Repository(Path);
+            CommitInterval = commitInterval;
+            _timer = new System.Windows.Forms.Timer
+            {
+                Interval = CommitInterval
+            };
+            _timer.Tick += CommitTimerElapsed;
+        }
 
-            _commitInterval = commitInterval;
+        public Committer()
+        {
+            _settings = Settings.Instance;
+            _settings.PropertyChanged += SettingsChanged;
+            _timer = new System.Windows.Forms.Timer();
+            _timer.Tick += CommitTimerElapsed;
+        }
+
+        private void SettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Settings.FolderToWatch))
+            {
+                Path = _settings.FolderToWatch;
+            }
+
+            if (e.PropertyName == nameof(Settings.CommitInterval))
+            {
+                CommitInterval = _settings.CommitInterval;
+            }
         }
 
         public void StartMonitoring()
         {
-            if (Running)
+            if (Running || !IsInitialized)
                 return;
 
-            _timer = new System.Windows.Forms.Timer
-            {
-                Interval = _commitInterval
-            };
-            _timer.Tick += CommitTimerElapsed;
             _timer.Start();
-
-            _fsw = new FileSystemWatcher(Path)
-            {
-                IncludeSubdirectories = true,
-                EnableRaisingEvents = true
-            };
-            _fsw.Created += FileUpdated;
-            _fsw.Changed += FileUpdated;
-            _fsw.Deleted += FileUpdated;
-            _fsw.Renamed += FileRenamed;
 
             Running = true;
             Status = "Running";
+        }
+
+        public void StopMonitoring()
+        {
+            if (!Running)
+                return;
+
+            _timer.Stop();
+
+            Running = false;
+            Status = "Not running";
         }
 
         private void CommitTimerElapsed(object sender, EventArgs e)
@@ -83,17 +134,18 @@ namespace StreamCommit
             {
                 PerformCommit();
                 Thread.Sleep(1000);
-                if(Running)
+                if (Running)
                 {
                     Status = "Running";
-                }else
+                }
+                else
                 {
                     Status = "Not running";
                 }
-                
             }).Start();
-            
         }
+
+        #region Git
 
         private void PerformCommit()
         {
@@ -126,11 +178,11 @@ namespace StreamCommit
             try
             {
                 RepositoryStatus status = _repo.RetrieveStatus();
-                foreach(StatusEntry c in status.Untracked)
+                foreach (StatusEntry c in status.Untracked)
                 {
                     _repo.Index.Add(c.FilePath);
                 }
-                
+
                 Commands.Stage(_repo, "*");
             }
             catch (Exception)
@@ -144,8 +196,8 @@ namespace StreamCommit
         {
             try
             {
-                _repo.Commit(commitMessage, new Signature(Settings.GitUsername, Settings.GitEmail, DateTimeOffset.Now),
-                    new Signature(Settings.GitUsername, Settings.GitEmail, DateTimeOffset.Now));
+                _repo.Commit(commitMessage, new Signature(_settings.GitUsername, _settings.GitEmail, DateTimeOffset.Now),
+                    new Signature(_settings.GitUsername, _settings.GitEmail, DateTimeOffset.Now));
             }
             catch (Exception e)
             {
@@ -162,11 +214,11 @@ namespace StreamCommit
                 var remote = _repo.Network.Remotes["origin"];
                 var options = new PushOptions();
                 options.CredentialsProvider = (url, user, cred) =>
-                    new UsernamePasswordCredentials { Username = Settings.GitUsername, Password = Settings.GitPassword };
+                    new UsernamePasswordCredentials { Username = _settings.GitUsername, Password = _settings.GitPassword };
                 Console.WriteLine("actually pushing");
                 _repo.Network.Push(_repo.Branches["master"], options);
             }
-            catch(LibGit2SharpException le)
+            catch (LibGit2SharpException le)
             {
                 Console.WriteLine(le.Message);
                 return false;
@@ -178,46 +230,21 @@ namespace StreamCommit
             return true;
         }
 
-        private void FileRenamed(object sender, RenamedEventArgs e)
-        {
-            FileUpdated(sender, new FileSystemEventArgs(WatcherChangeTypes.Renamed, e.FullPath, e.Name));
-        }
-
-        private void FileUpdated(object sender, FileSystemEventArgs e)
-        {
-            if (!_changedFiles.Contains(e.FullPath))
-                _changedFiles.Add(e.FullPath);
-
-            
-        }
-
-        public void StopMonitoring()
-        {
-            if (!Running)
-                return;
-
-            if(_fsw != null)
-            {
-                _fsw.Dispose();
-                _fsw = null;
-            }
-
-            if(_timer != null)
-            {
-                _timer.Dispose();
-                _timer = null;
-            }
-
-            Running = false;
-            Status = "Not running";
-        }
+        #endregion Git
 
         public void Dispose()
         {
-            if(_repo != null)
+            if (_repo != null)
             {
                 _repo.Dispose();
                 _repo = null;
+            }
+
+            if (_timer != null)
+            {
+                _timer.Stop();
+                _timer.Dispose();
+                _timer = null;
             }
         }
     }

@@ -1,20 +1,24 @@
+using PropertyChanged;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StreamCommit
 {
-    public class Settings
+    [AddINotifyPropertyChangedInterface]
+    public class Settings : INotifyPropertyChanged
     {
+        public static Settings Instance { get; private set; }
+
         private static string defaultAppSettings = $"<?xml version=\"1.0\" encoding=\"utf-8\" ?>{Environment.NewLine}<configuration>{Environment.NewLine}\t<startup> {Environment.NewLine}\t\t<supportedRuntime version=\"v4.0\" sku=\".NETFramework,Version=v4.5.2\" />{Environment.NewLine}\t</startup>{Environment.NewLine}</configuration>";
 
-        private static Configuration _configuration;
-        public static string FolderToWatch
+        private Configuration _configuration;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string FolderToWatch
         {
             get
             {
@@ -26,7 +30,15 @@ namespace StreamCommit
             }
         }
 
-        public static string GitUsername
+        public bool HasCredentials
+        {
+            get
+            {
+                return !(string.IsNullOrWhiteSpace(GitUsername) || string.IsNullOrWhiteSpace(GitPassword) || string.IsNullOrWhiteSpace(GitEmail));
+            }
+        }
+
+        public string GitUsername
         {
             get
             {
@@ -38,7 +50,7 @@ namespace StreamCommit
             }
         }
 
-        public static string GitPassword
+        public string GitPassword
         {
             get
             {
@@ -50,7 +62,7 @@ namespace StreamCommit
             }
         }
 
-        public static string GitEmail
+        public string GitEmail
         {
             get
             {
@@ -62,21 +74,34 @@ namespace StreamCommit
             }
         }
 
-        static Settings()
+        public int CommitInterval
         {
-            if(!File.Exists(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile))
+            get
+            {
+                return GetInt(nameof(CommitInterval), 10);
+            }
+            set
+            {
+                SetSetting(nameof(CommitInterval), value.ToString());
+            }
+        }
+
+        public Settings()
+        {
+            if (!File.Exists(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile))
             {
                 File.WriteAllText(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile, defaultAppSettings);
             }
             _configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            Instance = this;
         }
 
-        public static void Save()
+        public void Save()
         {
             _configuration.Save(ConfigurationSaveMode.Modified);
         }
-        
-        private static string GetSetting(string setting)
+
+        private string GetSetting(string setting)
         {
             if (_configuration.AppSettings.Settings[setting] == null)
                 SetSetting(setting, "");
@@ -84,12 +109,29 @@ namespace StreamCommit
             return _configuration.AppSettings.Settings[setting].Value;
         }
 
-        private static void SetSetting(string setting, string value)
+        private int GetInt(string setting, int defaultSetting)
         {
-            if(!_configuration.AppSettings.Settings.AllKeys.Contains(setting))
+            if (_configuration.AppSettings.Settings[setting] == null)
+                SetSetting(setting, defaultSetting.ToString());
+            int tmp;
+            if (int.TryParse(_configuration.AppSettings.Settings[setting].Value, out tmp))
+            {
+                return tmp;
+            }
+            else
+            {
+                SetSetting(setting, defaultSetting.ToString());
+                return defaultSetting;
+            }
+        }
+
+        private void SetSetting(string setting, string value)
+        {
+            if (!_configuration.AppSettings.Settings.AllKeys.Contains(setting))
             {
                 _configuration.AppSettings.Settings.Add(setting, value);
-            }else
+            }
+            else
             {
                 _configuration.AppSettings.Settings[setting].Value = value;
             }

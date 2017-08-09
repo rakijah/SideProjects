@@ -35,6 +35,8 @@ namespace StreamCommit
             this.fbdFolderToWatch = new System.Windows.Forms.FolderBrowserDialog();
             this.lblStatus = new MetroFramework.Controls.MetroLabel();
             this.btnCredentials = new MetroFramework.Controls.MetroButton();
+            this.tbCommitInterval = new MetroFramework.Controls.MetroTextBox();
+            this.lblCommitInterval = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
             // 
             // tbFolderToWatch
@@ -43,9 +45,9 @@ namespace StreamCommit
             // 
             // 
             this.tbFolderToWatch.CustomButton.Image = null;
-            this.tbFolderToWatch.CustomButton.Location = new System.Drawing.Point(181, 2);
+            this.tbFolderToWatch.CustomButton.Location = new System.Drawing.Point(185, 1);
             this.tbFolderToWatch.CustomButton.Name = "";
-            this.tbFolderToWatch.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.tbFolderToWatch.CustomButton.Size = new System.Drawing.Size(23, 23);
             this.tbFolderToWatch.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.tbFolderToWatch.CustomButton.TabIndex = 1;
             this.tbFolderToWatch.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -91,7 +93,7 @@ namespace StreamCommit
             // 
             this.btnToggleRun.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnToggleRun.Enabled = false;
-            this.btnToggleRun.Location = new System.Drawing.Point(29, 157);
+            this.btnToggleRun.Location = new System.Drawing.Point(29, 169);
             this.btnToggleRun.Name = "btnToggleRun";
             this.btnToggleRun.Size = new System.Drawing.Size(98, 35);
             this.btnToggleRun.TabIndex = 3;
@@ -102,7 +104,7 @@ namespace StreamCommit
             // lblStatus
             // 
             this.lblStatus.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.lblStatus.Location = new System.Drawing.Point(141, 165);
+            this.lblStatus.Location = new System.Drawing.Point(141, 177);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(132, 21);
             this.lblStatus.TabIndex = 4;
@@ -119,11 +121,53 @@ namespace StreamCommit
             this.btnCredentials.UseSelectable = true;
             this.btnCredentials.Click += new System.EventHandler(this.btnCredentials_Click);
             // 
+            // tbCommitInterval
+            // 
+            // 
+            // 
+            // 
+            this.tbCommitInterval.CustomButton.Image = null;
+            this.tbCommitInterval.CustomButton.Location = new System.Drawing.Point(15, 1);
+            this.tbCommitInterval.CustomButton.Name = "";
+            this.tbCommitInterval.CustomButton.Size = new System.Drawing.Size(23, 23);
+            this.tbCommitInterval.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.tbCommitInterval.CustomButton.TabIndex = 1;
+            this.tbCommitInterval.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.tbCommitInterval.CustomButton.UseSelectable = true;
+            this.tbCommitInterval.CustomButton.Visible = false;
+            this.tbCommitInterval.Lines = new string[0];
+            this.tbCommitInterval.Location = new System.Drawing.Point(199, 118);
+            this.tbCommitInterval.MaxLength = 32767;
+            this.tbCommitInterval.Name = "tbCommitInterval";
+            this.tbCommitInterval.PasswordChar = '\0';
+            this.tbCommitInterval.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.tbCommitInterval.SelectedText = "";
+            this.tbCommitInterval.SelectionLength = 0;
+            this.tbCommitInterval.SelectionStart = 0;
+            this.tbCommitInterval.ShortcutsEnabled = true;
+            this.tbCommitInterval.Size = new System.Drawing.Size(39, 25);
+            this.tbCommitInterval.TabIndex = 6;
+            this.tbCommitInterval.UseSelectable = true;
+            this.tbCommitInterval.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.tbCommitInterval.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.tbCommitInterval.TextChanged += new System.EventHandler(this.tbCommitInterval_TextChanged);
+            // 
+            // lblCommitInterval
+            // 
+            this.lblCommitInterval.AutoSize = true;
+            this.lblCommitInterval.Location = new System.Drawing.Point(29, 120);
+            this.lblCommitInterval.Name = "lblCommitInterval";
+            this.lblCommitInterval.Size = new System.Drawing.Size(164, 19);
+            this.lblCommitInterval.TabIndex = 7;
+            this.lblCommitInterval.Text = "Commit interval (seconds):";
+            // 
             // StreamCommitForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 215);
+            this.ClientSize = new System.Drawing.Size(300, 227);
+            this.Controls.Add(this.lblCommitInterval);
+            this.Controls.Add(this.tbCommitInterval);
             this.Controls.Add(this.btnCredentials);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnToggleRun);
@@ -132,6 +176,7 @@ namespace StreamCommit
             this.Controls.Add(this.tbFolderToWatch);
             this.Name = "StreamCommitForm";
             this.Text = "StreamCommit";
+            this.Load += new System.EventHandler(this.StreamCommitForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -146,6 +191,8 @@ namespace StreamCommit
         private System.Windows.Forms.FolderBrowserDialog fbdFolderToWatch;
         private MetroFramework.Controls.MetroLabel lblStatus;
         private MetroFramework.Controls.MetroButton btnCredentials;
+        private MetroFramework.Controls.MetroTextBox tbCommitInterval;
+        private MetroFramework.Controls.MetroLabel lblCommitInterval;
     }
 }
 
