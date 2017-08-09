@@ -70,6 +70,8 @@ A small Tampermonkey script that adds a CS:GO Squad button to every Steam profil
 
 ![Screenshot](http://i.imgur.com/puRKGHu.png)
 
+(project created ca. August 2017)
+
 An experimental utility that is supposed to help programming streamers better interact with their viewers. It periodically pushes git commits every X seconds (configurable) of every file that has changed within a Git repository, so viewers can see the changes they make to their code live on Github.
 
 In my experience, it can sometimes be hard to track exactly what a streamer is doing, because they switch between files/scroll through documents too fast for their viewers. With this utility, a viewer can better understand the streamers code architecture and provide better help.
