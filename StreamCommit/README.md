@@ -1,6 +1,6 @@
 ## StreamCommit
 
-![Screenshot](http://i.imgur.com/puRKGHu.png)
+![Screenshot](http://i.imgur.com/aZAi9yL.png)
 
 (project created ca. August 2017)
 
