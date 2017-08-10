@@ -60,6 +60,9 @@ namespace StreamCommit
             if (!IsReadyToRun)
                 return;
 
+            if (!Repository.IsValid(Settings.FolderToWatch))
+                return;
+
             if (_committer == null)
             {
                 _committer = new Committer();
@@ -135,7 +138,10 @@ namespace StreamCommit
             lblLoggedIn.Text = $"User: {(string.IsNullOrWhiteSpace(Settings.GitUsername) ? "-" : Settings.GitUsername)}";
             tbCommitInterval.Text = (Settings.CommitInterval / 1000).ToString();
             _committer = new Committer();
-            _committer.Path = Settings.FolderToWatch;
+            if(Repository.IsValid(Settings.FolderToWatch))
+            {
+                _committer.Path = Settings.FolderToWatch;
+            }
             _committer.CommitInterval = Settings.CommitInterval;
             _committer.StatusChanged += StatusChanged;
 
