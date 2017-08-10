@@ -1,6 +1,4 @@
 using LibGit2Sharp;
-using MetroFramework.Controls;
-using MetroFramework.Forms;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -8,7 +6,7 @@ using System.Windows.Forms;
 
 namespace StreamCommit
 {
-    public partial class StreamCommitForm : MetroForm
+    public partial class StreamCommitForm : Form
     {
         public Settings Settings;
         private Committer _committer;
@@ -41,18 +39,19 @@ namespace StreamCommit
                 Settings.FolderToWatch = "";
                 return;
             }
-            tbFolderToWatch.Text = Settings.FolderToWatch;
+            lblFolderToWatch.Text = Settings.FolderToWatchTopDirectory;
         }
 
         private void StatusChanged(string newStatus)
         {
+            string newText = $"Status: {newStatus}";
             if (lblStatus.InvokeRequired)
             {
-                lblStatus.BeginInvoke((MethodInvoker)delegate () { lblStatus.Text = newStatus; });
+                lblStatus.BeginInvoke((MethodInvoker)delegate () { lblStatus.Text = newText; });
             }
             else
             {
-                lblStatus.Text = $"Status: {newStatus}";
+                lblStatus.Text = newText;
             }
         }
 
@@ -67,18 +66,20 @@ namespace StreamCommit
                 _committer.Path = Settings.FolderToWatch;
                 _committer.CommitInterval = Settings.CommitInterval;
             }
-            
+
             if (_committer.Running)
             {
-                btnCredentials.Enabled = false;
-                btnFolderToWatch.Enabled = false;
                 _committer.StopMonitoring();
+                btnCredentials.Enabled = true;
+                btnFolderToWatch.Enabled = true;
+                tbCommitInterval.Enabled = true;
             }
             else
             {
-                btnCredentials.Enabled = true;
-                btnFolderToWatch.Enabled = true;
                 _committer.StartMonitoring();
+                btnCredentials.Enabled = false;
+                btnFolderToWatch.Enabled = false;
+                tbCommitInterval.Enabled = false;
             }
 
             btnToggleRun.Text = (_committer.Running ? "Stop" : "Start");
@@ -90,22 +91,24 @@ namespace StreamCommit
             if (result != DialogResult.OK)
                 return;
 
-            if (!string.IsNullOrWhiteSpace(fbdFolderToWatch.SelectedPath))
+            if (!Repository.IsValid(fbdFolderToWatch.SelectedPath))
             {
-                Settings.FolderToWatch = fbdFolderToWatch.SelectedPath;
-                tbFolderToWatch.Text = Settings.FolderToWatch;
-                UpdateFolderToWatch();
+                MessageBox.Show($"\"{fbdFolderToWatch.SelectedPath}\" is not a valid Git repository.");
+                return;
             }
+            Settings.FolderToWatch = fbdFolderToWatch.SelectedPath;
+            lblFolderToWatch.Text = Settings.FolderToWatchTopDirectory;
+            UpdateFolderToWatch();
         }
 
         private void btnCredentials_Click(object sender, EventArgs e)
         {
             var result = new EnterCredentials().ShowDialog();
+            lblLoggedIn.Text = $"User: {(string.IsNullOrWhiteSpace(Settings.GitUsername) ? "-" : Settings.GitUsername)}";
         }
 
         private void SettingsChanged(object sender, PropertyChangedEventArgs e)
         {
-            Console.WriteLine(e.PropertyName);
             if (_committer != null && _committer.Running)
                 return;
 
@@ -118,18 +121,24 @@ namespace StreamCommit
             if (int.TryParse(tbCommitInterval.Text, out tmp))
             {
                 Settings.CommitInterval = tmp * 1000; //convert to ms
+                tbCommitInterval.BackColor = Color.White;
+            }
+            else
+            {
+                tbCommitInterval.BackColor = Color.FromArgb(255, 200, 200);
             }
         }
 
         private void StreamCommitForm_Load(object sender, EventArgs e)
         {
-            tbFolderToWatch.Text = Settings.FolderToWatch;
+            lblFolderToWatch.Text = Settings.FolderToWatchTopDirectory;
+            lblLoggedIn.Text = $"User: {(string.IsNullOrWhiteSpace(Settings.GitUsername) ? "-" : Settings.GitUsername)}";
             tbCommitInterval.Text = (Settings.CommitInterval / 1000).ToString();
             _committer = new Committer();
             _committer.Path = Settings.FolderToWatch;
             _committer.CommitInterval = Settings.CommitInterval;
             _committer.StatusChanged += StatusChanged;
-            
+
             btnToggleRun.Enabled = IsReadyToRun;
         }
     }

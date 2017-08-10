@@ -197,11 +197,7 @@ namespace StreamCommit
                 _repo.Commit(commitMessage, new Signature(_settings.GitUsername, _settings.GitEmail, DateTimeOffset.Now),
                     new Signature(_settings.GitUsername, _settings.GitEmail, DateTimeOffset.Now));
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return false;
-            }
+            catch (Exception) { return false; }
             return true;
         }
 
@@ -213,12 +209,10 @@ namespace StreamCommit
                 var options = new PushOptions();
                 options.CredentialsProvider = (url, user, cred) =>
                     new UsernamePasswordCredentials { Username = _settings.GitUsername, Password = _settings.GitPassword };
-                Console.WriteLine("actually pushing");
                 _repo.Network.Push(_repo.Branches["master"], options);
             }
             catch (LibGit2SharpException le)
             {
-                Console.WriteLine(le.Message);
                 return false;
             }
             catch (Exception)

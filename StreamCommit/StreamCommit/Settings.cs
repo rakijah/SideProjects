@@ -38,6 +38,8 @@ namespace StreamCommit
             }
         }
 
+        public string FolderToWatchTopDirectory => Util.GetTopDirectory(FolderToWatch);
+
         public bool HasCredentials
         {
             get

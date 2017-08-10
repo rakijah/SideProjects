@@ -1,10 +1,9 @@
-using MetroFramework.Forms;
 using System;
 using System.Windows.Forms;
 
 namespace StreamCommit
 {
-    public partial class EnterCredentials : MetroForm
+    public partial class EnterCredentials : Form
     {
         private Settings _settings;
 
